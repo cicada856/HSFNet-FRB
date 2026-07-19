@@ -1,0 +1,63 @@
+experiment:
+  seed: 42
+  classes: [A, B, C, C1, C2]
+  paper_types: [I, II, III, IV, V]
+  simulated_samples_per_class: 1800
+  simulated_snrs: [15, 25, 35, 50, 100]
+  internal_validation_fraction: 0.20
+  development_samples: 267
+  paper_test_samples: 268
+
+base_classifier:
+  backbone: resnet50
+  batch_size: 8
+  learning_rate: 0.0001
+  dropout: 0.30
+  max_epochs: 50
+  early_stopping_patience: 10
+  mask_probability: 0.70
+  mask_max_fraction: 0.25
+  noise_probability: 0.60
+  noise_scale: 0.025
+  noise_bank_size: 512
+  class_augmentation_multipliers: {A: 0.5, B: 1.0, C: 1.0, C1: 0.4, C2: 1.0}
+  class_weights: {A: 1.15, B: 0.75, C: 1.0, C1: 3.0, C2: 1.2}
+
+tri_specialist:
+  classes: [B, C1, C2]
+  backbone: resnet18
+  batch_size: 16
+  learning_rate: 0.0002
+  dropout: 0.30
+  max_epochs: 50
+  early_stopping_patience: 10
+  mask_probability: 0.65
+  mask_max_fraction: 0.22
+  noise_probability: 0.55
+  noise_scale: 0.02
+  class_augmentation_multipliers: {B: 1.0, C1: 0.35, C2: 0.85}
+  class_weights: {B: 0.7, C1: 4.0, C2: 1.3}
+
+binary_specialists:
+  backbone: resnet18
+  batch_size: 16
+  learning_rate: 0.0002
+  dropout: 0.30
+  max_epochs: 50
+  early_stopping_patience: 10
+  mask_probability: 0.60
+  mask_max_fraction: 0.20
+  noise_probability: 0.50
+  noise_scale: 0.02
+  b_vs_c1:
+    class_augmentation_multipliers: {B: 1.0, C1: 0.35}
+    class_weights: {B: 0.7, C1: 4.0}
+  c1_vs_c2:
+    class_augmentation_multipliers: {C1: 0.35, C2: 0.85}
+    class_weights: {C1: 3.5, C2: 1.3}
+
+fusion:
+  route_mode: predicted_subset
+  local_classes: [B, C1, C2]
+  vote_bonus_beta: 0.20
+  beta_selection: development-only five-fold out-of-fold macro-F1

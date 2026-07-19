@@ -1,0 +1,26 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.idea/
+.vscode/
+.DS_Store
+
+# Generated training/evaluation outputs
+artifacts/
+reports/
+*.keras
+*.h5
+*.ckpt*
+checkpoint
+
+# Local environments and caches
+.venv/
+venv/
+env/
+.conda/
+.cache/
+.codex*/
+.agents/
+
+# Full simulation data are intentionally not tracked
+data/simulated/simfrb/

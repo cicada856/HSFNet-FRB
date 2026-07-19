@@ -1,0 +1,37 @@
+{
+  "accuracy": 0.6343283582089553,
+  "c1_vote_bonus": 0.2,
+  "class_names": [
+    "A",
+    "B",
+    "C",
+    "C1",
+    "C2"
+  ],
+  "dataset": "chime_paper_test_half",
+  "fixed_mask_ratio": 0.0,
+  "macro_f1": 0.5334796516257037,
+  "macro_precision": 0.5260146298512635,
+  "macro_recall": 0.5558976600518692,
+  "margin_threshold": 0.18,
+  "n_routed_to_specialists": 140,
+  "n_samples": 268,
+  "paper_class_names": [
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V"
+  ],
+  "per_class_recall": {
+    "A": 0.7195121951219512,
+    "B": 0.6148148148148148,
+    "C": 0.6451612903225806,
+    "C1": 0.3,
+    "C2": 0.5
+  },
+  "route_mode": "predicted_subset",
+  "weighted_f1": 0.640265178642401,
+  "weighted_precision": 0.6587672446273932,
+  "weighted_recall": 0.6343283582089553
+}

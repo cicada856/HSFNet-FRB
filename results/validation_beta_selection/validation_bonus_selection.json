@@ -1,0 +1,35 @@
+{
+  "beta_grid": [
+    0.0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45,
+    0.5
+  ],
+  "n_oof_samples": 267,
+  "oof_csv": "reports/validation_beta_selection/oof_component_predictions.csv",
+  "oof_csv_sha256": "0f4ad2a4ae385473f6fdff275a318ca4cda9562cddaad9e7869c5af748fad648",
+  "paper_test_metrics_access_before_selection": false,
+  "selected_beta": 0.2,
+  "selection_metrics": {
+    "accuracy": 0.5805243445692884,
+    "beta": 0.2,
+    "c1_recall": 0.2,
+    "c2_recall": 0.6,
+    "macro_f1": 0.46281858020801775,
+    "n_routed": 174,
+    "weighted_f1": 0.5862010858802653
+  },
+  "selection_rule": [
+    "maximize development OOF macro-F1",
+    "break exact ties by higher accuracy",
+    "break remaining exact ties by smaller beta"
+  ],
+  "validation_bonus_sweep_csv": "reports/validation_beta_selection/validation_bonus_sweep.csv"
+}

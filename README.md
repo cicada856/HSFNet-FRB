@@ -1,71 +1,103 @@
-# HSFNet-FRB
+# HSFNet-FRB-DLSR
 
-HSFNet-FRB is a hierarchical specialist-fusion network for five-class fast radio burst (FRB) morphology classification. A ResNet50 base classifier handles the global A/B/C/C1/C2 task, while a B/C1/C2 specialist and two binary specialists refine the main minority-class confusion boundaries.
+HSFNet-FRB-DLSR classifies fast radio burst morphology into five classes: A, B, C, C1, and C2.
 
-On the fixed 268-sample CHIME paper-test split, the selected system obtains **63.43% accuracy**, **53.35% macro-F1**, and **64.03% weighted-F1**, with C1 and C2 recall of **30.00%** and **50.00%**, respectively. The fusion vote bonus (`beta=0.20`) was selected using development-only out-of-fold predictions.
+## Model
 
-## Repository contents
+A ResNet-50 extracts global features and five-class probabilities. The Decoupled Cost-Sensitive Local-Subspace Router (DLSR) uses these outputs and confidence statistics to decide whether to retain the base prediction or route the input to three parallel ResNet-18 specialists: B/C1/C2, B-vs-C1, and C1-vs-C2. Specialist probabilities and binary votes are combined to produce the local prediction.
 
-```text
-configs/                 Final reported hyperparameters
-data/chime/              Processed CHIME arrays, labels, and event order
-data/simulated/          Expected simulation-data layout (data not bundled)
-data/splits/             Fixed development/paper-test membership
-results/                 Selected test metrics and development-only beta sweep
-scripts/                 Reproduction command wrappers
-src/hsfnet/              Core training, fusion, evaluation, and audit code
-```
+The component networks are frozen during router training. The selected router uses 64- and 32-unit hidden layers, cost-sensitive focal loss, a dual-confirmation threshold of 0.40, and local routing for base-predicted C1. The specialist vote weight is 0.20. Configuration selection uses five-fold out-of-fold (OOF) predictions on the development split.
 
-Model weights, the approximately 12 GB simulation corpus, paper sources, figures, and supplementary experiment outputs are intentionally excluded.
+## Experiments
 
-## Environment
+The fixed CHIME split contains 267 development samples and 268 test samples. Router training uses seeds 42, 43, and 44.
 
-The reported experiments used Python 3.8 and TensorFlow 2.9.
+| System | Accuracy (%) | Macro-F1 (%) |
+| --- | ---: | ---: |
+| CHIME-adapted HSFNet-FRB-DLSR | 63.18 ± 0.22 | 53.07 ± 0.24 |
+| Simulation-only DLSR control | 54.85 | 39.80 |
 
-```bash
-conda create -n hsfnet-frb python=3.8 -y
-conda activate hsfnet-frb
-pip install -r requirements.txt
-```
-
-## Data
-
-`data/chime/chime_interp_frbs_data.npz` contains 535 processed `256 x 256` CHIME waterfall arrays stored as `uint8`. Each sample was independently normalized by its positive maximum, matching the preprocessing in `src/hsfnet/data.py`. The fixed class-wise half split contains 267 development and 268 paper-test samples.
-
-The full simulation corpus is not included because of its size. Place Frabjous-style simulation files under `data/simulated/simfrb/` as described in [data/simulated/README.md](data/simulated/README.md).
-
-The CHIME-derived data retain the ordering and morphology labels used by this study. Before redistributing a fork, verify that your use complies with the original CHIME/FRB data terms and cite the source publications listed below.
+Values are means across the three router runs; ± gives the sample standard deviation. The simulation-only control gives the same scores across all three runs. Both systems use the same locked DLSR configuration and test split. The control trains its component networks and router on simulations; the adapted system also uses CHIME development data.
 
 ## Reproduction
 
-After installing the simulation data, train all four components with:
+Run the commands below from the repository root on Linux with a TensorFlow-compatible GPU environment.
+
+### 1. Install dependencies
 
 ```bash
-bash scripts/train_final_system.sh
+conda create -n hsfnet python=3.8 -y
+conda activate hsfnet
+python -m pip install -r requirements.txt
 ```
 
-Evaluate the trained hierarchy on the fixed paper-test split with:
+### 2. Prepare data and component models
 
-```bash
-bash scripts/evaluate_final_system.sh
+```text
+data/chime/chime_interp_frbs_data.npz
+data/chime/chime_labels.txt
+data/simulated/simfrb/simdata/type_{class}/SNR_{snr}/simulatefrbs_type_{class}.npz
+data/simulated/simfrb/remove_type_C1_SNR_{snr}.txt
+data/simulated/simfrb/type_C2_SNR_{snr}.txt
+
+artifacts/models/final/base_resnet50/
+artifacts/models/final/tri_specialist_b_c1_c2/
+artifacts/models/final/binary_specialist_b_vs_c1/
+artifacts/models/final/binary_specialist_c1_vs_c2/
 ```
 
-Individual scripts expose additional options through `--help`. The exact selected settings are recorded in [configs/final_configuration.yaml](configs/final_configuration.yaml).
+Simulation classes are `A, B, C, C1, C2`; SNR values are `15, 25, 35, 50, 100`. CHIME labels are one class name per line in the array's sample order. Use the supplied split at `artifacts/runs/resnet50_c1_repair_gpu0/paper_chime_split_indices.npz`.
 
-The fusion parameter can be independently recomputed from the retained out-of-fold predictions:
+Component training entry points are `src/hsfnet/train_multiclass.py`, `train_specialist_b_c1_c2.py`, and `train_pair_specialist.py`. For the simulation-only control, place the four component models at the paths in `reports/matched_simulation_only_dlsr_control/checkpoint_manifest.json`. Data and trained weights are stored separately from this repository.
+
+### 3. Generate development OOF predictions
 
 ```bash
+python src/hsfnet/experiments/generate_validation_oof_predictions.py \
+  --output-dir reports/reproduction_oof \
+  --model-root artifacts/runs/validation_beta_selection \
+  --samples-per-class 1800 --epochs 50 --seed 42 \
+  --device gpu --gpu-id 0
+
 python src/hsfnet/experiments/select_vote_bonus_from_oof.py \
-  --oof-csv results/validation_beta_selection/oof_component_predictions.csv \
-  --output-dir artifacts/beta_selection_check
+  --oof-csv reports/reproduction_oof/oof_component_predictions.csv \
+  --output-dir reports/reproduction_oof
 ```
 
-## Data provenance
+This trains the five-fold component models and generates development predictions. The DLSR workflow uses the fold base models under `artifacts/runs/validation_beta_selection/fold_{0..4}/base/best_model/`.
 
-- CHIME/FRB Collaboration, *The First CHIME/FRB Fast Radio Burst Catalog*, ApJS 257, 59 (2021), https://doi.org/10.3847/1538-4365/ac33ab
-- Pleunis et al., *Fast Radio Burst Morphology in the First CHIME/FRB Catalog*, ApJ 923, 1 (2021), https://doi.org/10.3847/1538-4357/ac33ac
-- Kumar, Mahabal, and Tendulkar, *Frabjous: Deep Learning Fast Radio Burst Morphologies*, PASA 43 (2026), https://doi.org/10.1017/pasa.2026.10191
+### 4. Train and evaluate DLSR
 
-## License
+```bash
+python scripts/run_decoupled_cost_sensitive_hard_router.py \
+  --oof-components reports/reproduction_oof/oof_component_predictions.csv \
+  --report-dir reports/reproduction_dlsr \
+  --artifact-dir artifacts/runs/reproduction_dlsr \
+  --seeds 42,43,44 --epochs 25 --device gpu --gpu-id 0
+```
 
-The source code is released under the MIT License. Third-party and derived datasets remain subject to their original terms.
+The script selects the router and routing policy on development OOF predictions, locks the configuration, then trains and evaluates three routers. Outputs include the locked configuration, per-sample predictions, confusion matrices, and aggregate metrics.
+
+### 5. Run the matched simulation-only control
+
+With the simulation-only component models in place, run:
+
+```bash
+python scripts/run_matched_simulation_only_dlsr_control.py \
+  --report-dir reports/reproduction_simulation_only \
+  --artifact-dir artifacts/runs/reproduction_simulation_only \
+  --seeds 42,43,44 --epochs 25 --bootstrap-replicates 10000 \
+  --device gpu --gpu-id 0
+```
+
+This script uses the saved configuration and adapted-system predictions in `reports/decoupled_cost_sensitive_hard_router/`. It trains the control routers and computes paired McNemar tests, bootstrap intervals, and randomization tests against those predictions.
+
+## Saved results
+
+- `reports/decoupled_cost_sensitive_hard_router/`: DLSR configuration, selection records, and test results.
+- `reports/matched_simulation_only_dlsr_control/`: control results and paired statistics.
+- `reports/validation_beta_selection/`: development folds, OOF predictions, and vote-weight selection.
+- `reports/specialist_full_true_subsets/`: specialist predictions and confusion matrices.
+- `reports/data_leakage_audit/` and `reports/inference_cost/`: data audit and inference cost.
+
+File checksums are listed in `SHA256SUMS.txt`. Source code is distributed under [LICENSE](LICENSE).

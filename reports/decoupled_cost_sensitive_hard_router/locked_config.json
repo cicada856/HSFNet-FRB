@@ -1,0 +1,216 @@
+{
+  "active": true,
+  "adoption_guard": {
+    "C1_recall_not_lower": true,
+    "max_accuracy_drop": 0.01,
+    "max_macro_f1_drop": 0.005,
+    "minimum_favorable_seeds": 2,
+    "router_must_be_active": true
+  },
+  "beta": 0.2,
+  "development_baseline": {
+    "accuracy": 0.5805243445692884,
+    "balanced_accuracy": 0.4838709677419355,
+    "confusion_matrix": [
+      [
+        42,
+        32,
+        0,
+        4,
+        3
+      ],
+      [
+        25,
+        92,
+        6,
+        10,
+        2
+      ],
+      [
+        2,
+        9,
+        13,
+        1,
+        6
+      ],
+      [
+        3,
+        5,
+        0,
+        2,
+        0
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        6
+      ]
+    ],
+    "local_subset_accuracy": 0.6451612903225806,
+    "local_subset_balanced_accuracy": 0.49382716049382713,
+    "local_subset_macro_f1": 0.5434264269867927,
+    "macro_f1": 0.46281858020801775,
+    "n": 267,
+    "per_class_recall": {
+      "A": 0.5185185185185185,
+      "B": 0.6814814814814815,
+      "C": 0.41935483870967744,
+      "C1": 0.2,
+      "C2": 0.6
+    },
+    "weighted_f1": 0.5862010858802653
+  },
+  "development_selected": {
+    "corrections": {
+      "a_c_correct_became_wrong": 0,
+      "a_c_newly_routed": 0,
+      "a_c_no_longer_routed": 7,
+      "a_c_wrong_became_correct": 0,
+      "base_correct_changed_to_wrong": 0,
+      "changed_to_correct": 1,
+      "changed_to_wrong": 0,
+      "changed_wrong_to_different_wrong": 1,
+      "local_changed_to_correct": 1,
+      "local_changed_to_wrong": 0,
+      "newly_routed": 0,
+      "no_longer_routed": 14,
+      "prediction_flips": 2,
+      "route_changes": 14,
+      "transitions": {
+        "C2->B": 2
+      }
+    },
+    "fold_diagnostics": [
+      {
+        "changed_to_correct": 0,
+        "changed_to_wrong": 0,
+        "fold": 0,
+        "prediction_flips": 0,
+        "route_changes": 1
+      },
+      {
+        "changed_to_correct": 0,
+        "changed_to_wrong": 0,
+        "fold": 1,
+        "prediction_flips": 0,
+        "route_changes": 0
+      },
+      {
+        "changed_to_correct": 0,
+        "changed_to_wrong": 0,
+        "fold": 2,
+        "prediction_flips": 1,
+        "route_changes": 4
+      },
+      {
+        "changed_to_correct": 1,
+        "changed_to_wrong": 0,
+        "fold": 3,
+        "prediction_flips": 1,
+        "route_changes": 8
+      },
+      {
+        "changed_to_correct": 0,
+        "changed_to_wrong": 0,
+        "fold": 4,
+        "prediction_flips": 0,
+        "route_changes": 1
+      }
+    ],
+    "metrics": {
+      "accuracy": 0.5842696629213483,
+      "balanced_accuracy": 0.4853524492234169,
+      "confusion_matrix": [
+        [
+          42,
+          33,
+          0,
+          4,
+          2
+        ],
+        [
+          25,
+          93,
+          6,
+          10,
+          1
+        ],
+        [
+          2,
+          9,
+          13,
+          1,
+          6
+        ],
+        [
+          3,
+          5,
+          0,
+          2,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          6
+        ]
+      ],
+      "local_subset_accuracy": 0.6516129032258065,
+      "local_subset_balanced_accuracy": 0.4962962962962963,
+      "local_subset_macro_f1": 0.5582223970970773,
+      "macro_f1": 0.47040573067171526,
+      "n": 267,
+      "per_class_recall": {
+        "A": 0.5185185185185185,
+        "B": 0.6888888888888889,
+        "C": 0.41935483870967744,
+        "C1": 0.2,
+        "C2": 0.6
+      },
+      "weighted_f1": 0.5887362249010573
+    },
+    "policy": {
+      "confirm_threshold": 0.4,
+      "name": "dual_confirm",
+      "protect_base_c1": true
+    },
+    "routing": {
+      "accuracy": 0.6591760299625468,
+      "balanced_accuracy": 0.6470046082949308,
+      "false_positive_rate": 0.42857142857142855,
+      "invocation_rate": 0.599250936329588,
+      "miss_rate": 0.27741935483870966,
+      "n_invoked": 160
+    },
+    "selection_score": 0.5022045571541215
+  },
+  "method": "DLSR",
+  "paper_test_samples_indexed_before_lock": false,
+  "policy": {
+    "confirm_threshold": 0.4,
+    "name": "dual_confirm",
+    "protect_base_c1": true
+  },
+  "router_config": {
+    "batch_size": 256,
+    "development_weight": 16.0,
+    "dropout": 0.15,
+    "false_negative_cost": 1.0,
+    "false_positive_cost": 2.0,
+    "focal_gamma": 2.0,
+    "hidden_dim": 64,
+    "l2": 1e-05,
+    "learning_rate": 0.001,
+    "name": "focal_global_h64"
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "selection_scope": "CHIME development-only five-fold OOF"
+}

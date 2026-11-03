@@ -1,26 +1,40 @@
 __pycache__/
 *.py[cod]
-.pytest_cache/
-.idea/
-.vscode/
+.ipynb_checkpoints/
 .DS_Store
+data/chime/
+data/simulated/
+*.part
+*.log
+artifacts/runs/*/features/
 
-# Generated training/evaluation outputs
-artifacts/
-reports/
-*.keras
+# Trained weights are not part of this release.
 *.h5
-*.ckpt*
-checkpoint
+*.hdf5
+*.keras
+*.pb
+*.index
+*.data-*
+*.ckpt
 
-# Local environments and caches
-.venv/
-venv/
-env/
-.conda/
-.cache/
-.codex*/
-.agents/
-
-# Full simulation data are intentionally not tracked
-data/simulated/simfrb/
+# Manuscripts, publication images, and release archives.
+paper/
+论文/
+release/
+*.tex
+*.bib
+*.bst
+*.cls
+*.doc
+*.docx
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.eps
+*.tif
+*.tiff
+*.zip
+*.rar
+*.7z

@@ -1,0 +1,9 @@
+{
+  "n_baseline_rows": 14,
+  "n_bonus_rows": 13,
+  "n_error_examples": 98,
+  "n_mask_robustness_rows": 8,
+  "n_paired_delta_rows": 45,
+  "n_skipped_paired_comparisons": 0,
+  "n_stratified_rows": 11
+}

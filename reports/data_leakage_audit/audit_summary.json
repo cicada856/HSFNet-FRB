@@ -1,0 +1,37 @@
+{
+  "chime_data": "data/chime/chime_interp_frbs_data.npz",
+  "chime_labels": "data/chime/chime_labels.txt",
+  "class_counts": {
+    "A": {
+      "test": 82,
+      "train": 81
+    },
+    "B": {
+      "test": 135,
+      "train": 135
+    },
+    "C": {
+      "test": 31,
+      "train": 31
+    },
+    "C1": {
+      "test": 10,
+      "train": 10
+    },
+    "C2": {
+      "test": 10,
+      "train": 10
+    }
+  },
+  "downsample": 64,
+  "exact_duplicate_count": 0,
+  "index_overlap": [],
+  "index_overlap_count": 0,
+  "interpretation": "No direct leakage detected.",
+  "max_downsampled_cosine_similarity": 0.8499510884284973,
+  "mean_downsampled_nearest_cosine_similarity": 0.34448593854904175,
+  "n_test": 268,
+  "n_train": 267,
+  "near_duplicate_count_in_top_k": 0,
+  "near_duplicate_threshold": 0.999
+}

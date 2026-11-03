@@ -1,0 +1,42 @@
+{
+  "base_resnet50": {
+    "parameters": 23597957,
+    "path": "artifacts/runs/resnet50_c1_repair_gpu0/best_model",
+    "timing_on_268_chime_test": {
+      "mean_ms_per_sample": 24.65943971270028,
+      "mean_seconds": 6.608729843003675,
+      "std_seconds": 0.02882613025788453
+    }
+  },
+  "binary_specialist_b_vs_c1": {
+    "parameters": 2801058,
+    "path": "artifacts/runs/pair_specialist_B_vs_C1_gpu0/best_model",
+    "timing_on_268_chime_test": {
+      "mean_ms_per_sample": 3.4646219666004736,
+      "mean_seconds": 0.9285186870489269,
+      "std_seconds": 0.0021112193106212792
+    }
+  },
+  "binary_specialist_c1_vs_c2": {
+    "parameters": 2801058,
+    "path": "artifacts/runs/pair_specialist_C1_vs_C2_gpu0/best_model",
+    "timing_on_268_chime_test": {
+      "mean_ms_per_sample": 3.3953367428395396,
+      "mean_seconds": 0.9099502470809966,
+      "std_seconds": 0.0449631235996929
+    }
+  },
+  "pipeline_total": {
+    "note": "Timing rows are per-model full-test timings. The deployed routed pipeline only runs specialists for routed samples.",
+    "parameters_if_all_models_loaded": 32001388
+  },
+  "tri_specialist_b_c1_c2": {
+    "parameters": 2801315,
+    "path": "artifacts/runs/specialist_b_c1_c2_gpu0/best_model",
+    "timing_on_268_chime_test": {
+      "mean_ms_per_sample": 3.4724123716882582,
+      "mean_seconds": 0.9306065156124532,
+      "std_seconds": 0.008486032413092665
+    }
+  }
+}

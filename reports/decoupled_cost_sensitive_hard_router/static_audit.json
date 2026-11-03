@@ -1,0 +1,37 @@
+{
+  "candidate_policies": [
+    "router_only",
+    "dual_confirm",
+    "dual_confirm_rescue"
+  ],
+  "cost_sensitive_training": true,
+  "experiment": "Decoupled Cost-Sensitive Hard Router (DLSR)",
+  "final_checkpoints_overwritten": false,
+  "frozen_components": [
+    "five-class ResNet50 base",
+    "tri-specialist",
+    "B-vs-C1 specialist",
+    "C1-vs-C2 specialist",
+    "beta=0.20 fusion"
+  ],
+  "new_component": "lightweight binary global/local router trained from frozen base features",
+  "paper_latex_modified": false,
+  "paper_test_samples_indexed_before_lock": false,
+  "route_target": {
+    "global": [
+      "A",
+      "C"
+    ],
+    "local": [
+      "B",
+      "C1",
+      "C2"
+    ]
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "selection": "five-fold CHIME development-only OOF"
+}

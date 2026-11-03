@@ -104,6 +104,25 @@ def parse_class_values(spec, default_value=1.0):
     return [values[name] for name in CLASSES], values
 
 
+class FinalEpochModelSaver:
+    """Persist the requested final-epoch weights before early stopping restores best weights."""
+
+    def __init__(self, output_path, total_epochs):
+        self.output_path = str(output_path)
+        self.total_epochs = total_epochs
+
+    def as_callback(self, keras):
+        output_path = self.output_path
+        total_epochs = self.total_epochs
+
+        class _Saver(keras.callbacks.Callback):
+            def on_epoch_end(self, epoch, logs=None):
+                if epoch + 1 == total_epochs:
+                    self.model.save(output_path, save_format="tf")
+
+        return _Saver()
+
+
 def main():
     args = parse_args()
     if args.device == "gpu":
@@ -238,6 +257,7 @@ def main():
         keras.callbacks.EarlyStopping(monitor="val_accuracy", mode="max", patience=args.early_stop_patience, restore_best_weights=True),
         keras.callbacks.CSVLogger(str(out_dir / "training_history.csv")),
         keras.callbacks.TensorBoard(log_dir=str(out_dir / "tensorboard")),
+        FinalEpochModelSaver(out_dir / "final_model", args.epochs).as_callback(keras),
     ]
 
     config = vars(args).copy()
@@ -271,7 +291,6 @@ def main():
     )
 
     history = model.fit(train_ds, validation_data=val_ds, epochs=args.epochs, callbacks=callbacks)
-    model.save(str(out_dir / "final_model"), save_format="tf")
 
     best_model = keras.models.load_model(str(out_dir / "best_model"))
     val_metrics = best_model.evaluate(val_ds, verbose=0)

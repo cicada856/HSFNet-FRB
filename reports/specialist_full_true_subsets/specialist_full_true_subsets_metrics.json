@@ -1,0 +1,149 @@
+{
+  "chime_data": "data/chime/chime_interp_frbs_data.npz",
+  "chime_labels": "data/chime/chime_labels.txt",
+  "dataset": "independent CHIME paper-test half",
+  "existing_routed_source": "artifacts/runs/binary_specialist_fusion/eval_predicted_subset/confidence_scores.csv",
+  "n_paper_test_total": 268,
+  "selection_policy": "complete true-label subset; no base-prediction or routing filter",
+  "specialists": [
+    {
+      "classes": [
+        "B",
+        "C1",
+        "C2"
+      ],
+      "confusion_matrix": [
+        [
+          121,
+          7,
+          7
+        ],
+        [
+          6,
+          2,
+          2
+        ],
+        [
+          5,
+          0,
+          5
+        ]
+      ],
+      "confusion_matrix_csv": "\u8bba\u6587/figures/\u7b2c5\u8282/specialist_confusion_tri_b_c1_c2.csv",
+      "existing_routed_subset": {
+        "accuracy": 0.8035714285714286,
+        "balanced_accuracy": 0.5686177248677249,
+        "macro_f1": 0.5313074645472963,
+        "n_samples": 112,
+        "per_class_recall": {
+          "B": 0.8645833333333334,
+          "C1": 0.2857142857142857,
+          "C2": 0.5555555555555556
+        },
+        "selection": "base-prediction routed samples whose true label is in the expert task"
+      },
+      "full_true_subset": {
+        "accuracy": 0.8258064516129032,
+        "balanced_accuracy": 0.5320987654320988,
+        "macro_f1": 0.5111866745515474,
+        "n_samples": 155,
+        "per_class_recall": {
+          "B": 0.8962962962962963,
+          "C1": 0.2,
+          "C2": 0.5
+        },
+        "selection": "complete paper-test subset selected only by ground-truth class"
+      },
+      "key": "tri_b_c1_c2",
+      "model_path": "artifacts/models/final/tri_specialist_b_c1_c2",
+      "prediction_csv": "\u8bba\u6587/figures/\u7b2c5\u8282/specialist_predictions_tri_b_c1_c2.csv",
+      "title": "Tri-specialist: B / C1 / C2"
+    },
+    {
+      "classes": [
+        "B",
+        "C1"
+      ],
+      "confusion_matrix": [
+        [
+          102,
+          33
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "confusion_matrix_csv": "\u8bba\u6587/figures/\u7b2c5\u8282/specialist_confusion_binary_b_c1.csv",
+      "existing_routed_subset": {
+        "accuracy": 0.7475728155339806,
+        "balanced_accuracy": 0.6659226190476191,
+        "macro_f1": 0.5420656634746922,
+        "n_samples": 103,
+        "per_class_recall": {
+          "B": 0.7604166666666666,
+          "C1": 0.5714285714285714
+        },
+        "selection": "base-prediction routed samples whose true label is in the expert task"
+      },
+      "full_true_subset": {
+        "accuracy": 0.7379310344827587,
+        "balanced_accuracy": 0.6277777777777778,
+        "macro_f1": 0.5256542699724518,
+        "n_samples": 145,
+        "per_class_recall": {
+          "B": 0.7555555555555555,
+          "C1": 0.5
+        },
+        "selection": "complete paper-test subset selected only by ground-truth class"
+      },
+      "key": "binary_b_c1",
+      "model_path": "artifacts/models/final/binary_specialist_b_vs_c1",
+      "prediction_csv": "\u8bba\u6587/figures/\u7b2c5\u8282/specialist_predictions_binary_b_c1.csv",
+      "title": "Binary specialist: B / C1"
+    },
+    {
+      "classes": [
+        "C1",
+        "C2"
+      ],
+      "confusion_matrix": [
+        [
+          7,
+          3
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "confusion_matrix_csv": "\u8bba\u6587/figures/\u7b2c5\u8282/specialist_confusion_binary_c1_c2.csv",
+      "existing_routed_subset": {
+        "accuracy": 0.6875,
+        "balanced_accuracy": 0.6904761904761905,
+        "macro_f1": 0.6862745098039216,
+        "n_samples": 16,
+        "per_class_recall": {
+          "C1": 0.7142857142857143,
+          "C2": 0.6666666666666666
+        },
+        "selection": "base-prediction routed samples whose true label is in the expert task"
+      },
+      "full_true_subset": {
+        "accuracy": 0.7,
+        "balanced_accuracy": 0.7,
+        "macro_f1": 0.7,
+        "n_samples": 20,
+        "per_class_recall": {
+          "C1": 0.7,
+          "C2": 0.7
+        },
+        "selection": "complete paper-test subset selected only by ground-truth class"
+      },
+      "key": "binary_c1_c2",
+      "model_path": "artifacts/models/final/binary_specialist_c1_vs_c2",
+      "prediction_csv": "\u8bba\u6587/figures/\u7b2c5\u8282/specialist_predictions_binary_c1_c2.csv",
+      "title": "Binary specialist: C1 / C2"
+    }
+  ]
+}

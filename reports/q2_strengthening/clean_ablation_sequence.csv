@@ -1,0 +1,11 @@
+model,training_data,test_data,n,accuracy,macro_f1,weighted_f1,c1_recall,c2_recall,note,source
+ResNet small + mask/noise,sim + CHIME train,CHIME paper-test,268,56.71641791044776,46.835276605695775,53.62568675440671,30.0,50.0,initial stronger pipeline,artifacts/runs/resnet_mask_noise_gpu/eval_paper_compare
+ResNet18 + mask/noise,sim + CHIME train,CHIME paper-test,268,60.07462686567165,43.85842985842985,59.91135058299237,0.0,30.0,backbone comparison,artifacts/runs/resnet18_aug_gpu0/eval_paper_compare
+ResNet50 + mask/noise,sim + CHIME train,CHIME paper-test,268,61.940298507462686,46.71859587004265,62.688590029738,0.0,50.0,backbone comparison,artifacts/runs/resnet50_aug_gpu0/eval_paper_compare
+ResNet50 C1 repair base,sim + CHIME train,CHIME paper-test,268,62.31343283582089,48.70332983391209,63.16307704793485,10.0,50.0,main base model,artifacts/runs/resnet50_c1_repair_gpu0/eval_paper_compare
+Hierarchical ResNet50 + B/C1/C2 specialist,sim + CHIME train,CHIME paper-test,268,63.059701492537314,51.34750507515376,63.65329769867729,20.0,50.0,tri-specialist fusion,artifacts/runs/hierarchical_resnet50_b_c1_c2/eval_predicted_subset
+Final HSFNet-FRB binary specialist fusion,sim + CHIME train,CHIME paper-test,268,63.43283582089553,53.277427005075694,64.0133577602299,30.0,50.0,current selected model,artifacts/runs/binary_specialist_fusion/eval_predicted_subset
+Uncertain-subset routing,sim + CHIME train,CHIME paper-test,268,63.80597014925373,52.964575729281606,64.48693264430752,30.0,50.0,routing ablation,artifacts/runs/binary_specialist_fusion/eval_uncertain_subset_m018
+Noisebank v2 + binary specialists,sim + CHIME train,CHIME paper-test,268,61.940298507462686,52.580552963427444,62.37966124235991,30.0,50.0,negative augmentation ablation,artifacts/runs/noisebank_v2_binary_specialist_fusion/eval_predicted_subset
+Class-balanced focal + binary specialists,sim + CHIME train,CHIME paper-test,268,55.223880597014926,44.30278952897343,54.71736893949421,30.0,40.0,negative loss ablation,artifacts/runs/cb_focal_binary_specialist_fusion/eval_predicted_subset
+Sim-only final pipeline,sim only,CHIME paper-test,268,54.850746268656714,39.79704955356763,54.999072085478275,30.0,40.0,domain-gap test,artifacts/runs/sim_only_mainline/fusion_eval_seed_42_gpu0/eval_predicted_subset

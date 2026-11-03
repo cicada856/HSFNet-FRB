@@ -30,7 +30,7 @@ def parse_args():
     parser.add_argument("--split", choices=["paper_test", "paper_train", "all_chime"], default="paper_test")
     parser.add_argument("--route-mode", choices=["predicted_subset", "uncertain_subset"], default="predicted_subset")
     parser.add_argument("--margin-threshold", type=float, default=0.18, help="Route extra samples when top1-top2 margin is below this value.")
-    parser.add_argument("--c1-vote-bonus", type=float, default=0.20, help="OOF-selected score bonus for the class supported by each binary expert.")
+    parser.add_argument("--c1-vote-bonus", type=float, default=0.15, help="Additional score for C1 when either binary expert votes C1.")
     parser.add_argument("--fixed-mask-ratio", type=float, default=0.0, help="Deterministically mask this fraction of frequency channels at evaluation time.")
     parser.add_argument("--fixed-mask-seed", type=int, default=123)
     parser.add_argument("--batch-size", type=int, default=32)

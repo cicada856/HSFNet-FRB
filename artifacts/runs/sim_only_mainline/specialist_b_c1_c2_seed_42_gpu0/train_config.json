@@ -1,0 +1,51 @@
+{
+  "backbone": "resnet18",
+  "batch_size": 16,
+  "chime_data": "files/chime_interp_frbs_data.npz",
+  "chime_labels": "files/chime_labels.txt",
+  "class_aug_multipliers": "B:1.0,C1:0.35,C2:0.85",
+  "class_aug_multipliers_parsed": {
+    "B": 1.0,
+    "C1": 0.35,
+    "C2": 0.85
+  },
+  "class_weights": "B:0.7,C1:4.0,C2:1.3",
+  "class_weights_parsed": {
+    "B": 0.7,
+    "C1": 4.0,
+    "C2": 1.3
+  },
+  "device": "gpu",
+  "dropout": 0.3,
+  "early_stop_patience": 10,
+  "epochs": 50,
+  "gpu_id": "0",
+  "learning_rate": 0.0002,
+  "mask_max_fraction": 0.22,
+  "mask_prob": 0.65,
+  "n_chime_test_specialist_reserved": 155,
+  "n_chime_train_specialist": 155,
+  "n_sim_specialist": 5400,
+  "n_train_after_split": 4320,
+  "n_val_after_split": 1080,
+  "no_chime_train": true,
+  "noise_bank_size": 512,
+  "noise_prob": 0.0,
+  "noise_scale": 0.0,
+  "output_dir": "innovation_pipeline/runs/sim_only_mainline/specialist_b_c1_c2_seed_42_gpu0",
+  "samples_per_class": 1800,
+  "seed": 42,
+  "sim_dir": "repro_full/simfrb",
+  "snrs": "15,25,35,50,100",
+  "specialist_classes": [
+    "B",
+    "C1",
+    "C2"
+  ],
+  "specialist_to_global": [
+    1,
+    3,
+    4
+  ],
+  "val_fraction": 0.2
+}

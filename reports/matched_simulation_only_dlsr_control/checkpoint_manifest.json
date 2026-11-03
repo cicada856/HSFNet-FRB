@@ -1,0 +1,18 @@
+{
+  "base": {
+    "path": "artifacts/runs/sim_only_mainline/resnet50_base_seed_42_gpu0/best_model",
+    "train_config": "artifacts/runs/sim_only_mainline/resnet50_base_seed_42_gpu0/train_config.json"
+  },
+  "bc1": {
+    "path": "artifacts/runs/sim_only_mainline/pair_B_vs_C1_seed_42_gpu0/best_model",
+    "train_config": "artifacts/runs/sim_only_mainline/pair_B_vs_C1_seed_42_gpu0/train_config.json"
+  },
+  "c1c2": {
+    "path": "artifacts/runs/sim_only_mainline/pair_C1_vs_C2_seed_42_gpu0/best_model",
+    "train_config": "artifacts/runs/sim_only_mainline/pair_C1_vs_C2_seed_42_gpu0/train_config.json"
+  },
+  "tri": {
+    "path": "artifacts/runs/sim_only_mainline/specialist_b_c1_c2_seed_42_gpu0/best_model",
+    "train_config": "artifacts/runs/sim_only_mainline/specialist_b_c1_c2_seed_42_gpu0/train_config.json"
+  }
+}

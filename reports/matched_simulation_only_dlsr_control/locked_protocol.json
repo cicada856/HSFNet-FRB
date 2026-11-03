@@ -1,0 +1,38 @@
+{
+  "beta": 0.2,
+  "chime_development_samples_used_by_control_optimizer": 0,
+  "claim_boundary": "simulation-only training under a fixed DLSR configuration; architecture selection historically used CHIME development OOF",
+  "configuration_origin": "inherited unchanged from development-locked adapted DLSR",
+  "control_training_samples": "simulation only",
+  "experiment": "matched simulation-only DLSR control",
+  "model_paths": {
+    "base": "artifacts/runs/sim_only_mainline/resnet50_base_seed_42_gpu0/best_model",
+    "bc1": "artifacts/runs/sim_only_mainline/pair_B_vs_C1_seed_42_gpu0/best_model",
+    "c1c2": "artifacts/runs/sim_only_mainline/pair_C1_vs_C2_seed_42_gpu0/best_model",
+    "tri": "artifacts/runs/sim_only_mainline/specialist_b_c1_c2_seed_42_gpu0/best_model"
+  },
+  "policy": {
+    "confirm_threshold": 0.4,
+    "name": "dual_confirm",
+    "protect_base_c1": true
+  },
+  "router_config": {
+    "batch_size": 256,
+    "development_weight": 16.0,
+    "dropout": 0.15,
+    "false_negative_cost": 1.0,
+    "false_positive_cost": 2.0,
+    "focal_gamma": 2.0,
+    "hidden_dim": 64,
+    "l2": 1e-05,
+    "learning_rate": 0.001,
+    "name": "focal_global_h64"
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "selection_on_paper_test": false,
+  "test_split": "same immutable 268-sample CHIME paper-test half"
+}

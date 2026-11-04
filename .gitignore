@@ -8,7 +8,7 @@ data/simulated/
 *.log
 artifacts/runs/*/features/
 
-# Trained weights are not part of this release.
+# Trained weights are distributed through GitHub Releases.
 *.h5
 *.hdf5
 *.keras

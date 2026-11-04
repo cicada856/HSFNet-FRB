@@ -48,7 +48,19 @@ artifacts/models/final/binary_specialist_c1_vs_c2/
 
 Simulation classes are `A, B, C, C1, C2`; SNR values are `15, 25, 35, 50, 100`. CHIME labels are one class name per line in the array's sample order. Use the supplied split at `artifacts/runs/resnet50_c1_repair_gpu0/paper_chime_split_indices.npz`.
 
-Component training entry points are `src/hsfnet/train_multiclass.py`, `train_specialist_b_c1_c2.py`, and `train_pair_specialist.py`. For the simulation-only control, place the four component models at the paths in `reports/matched_simulation_only_dlsr_control/checkpoint_manifest.json`. Data and trained weights are stored separately from this repository.
+Component training entry points are `src/hsfnet/train_multiclass.py`, `train_specialist_b_c1_c2.py`, and `train_pair_specialist.py`. For the simulation-only control, place the four component models at the paths in `reports/matched_simulation_only_dlsr_control/checkpoint_manifest.json`. Obtain the input data separately and download the trained weights below.
+
+### Download trained weights
+
+Download the weights from the [trained-weights release](https://github.com/cicada856/HSFNet-FRB/releases/tag/dlsr-weights-20261104):
+
+- [Main model](https://github.com/cicada856/HSFNet-FRB/releases/download/dlsr-weights-20261104/HSFNet-FRB-DLSR_weights.zip): ResNet-50 base, three specialists, and DLSR routers for seeds 42, 43, and 44.
+- [Simulation-only control](https://github.com/cicada856/HSFNet-FRB/releases/download/dlsr-weights-20261104/HSFNet-FRB-DLSR_simulation_only_weights.zip): four control component models and three DLSR routers.
+- [SHA256 checksums](https://github.com/cicada856/HSFNet-FRB/releases/download/dlsr-weights-20261104/SHA256SUMS.txt).
+
+Extract the required ZIP into the repository root and preserve its directory structure. Locked configuration and training records are included. Use Python 3.8 and the dependencies in `requirements.txt`. The weights match code commit `df84471f9180b1de7098ff9e113f2bf400f16d9c`.
+
+The archives contain final models. Regenerating the five-fold development predictions in step 3 requires training the fold models. Training data are obtained separately.
 
 ### 3. Generate development OOF predictions
 
